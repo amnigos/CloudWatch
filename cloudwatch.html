@@ -13,6 +13,10 @@
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+      .rowtopspacing {
+        margin-top: 40px;
+      }
+
     </style>
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
@@ -99,7 +103,7 @@
     </div>
 
     <div class="container">
-
+    <div class="hero-unit">
     <div class="row">
     <h3 class="span8">Measure Amazon ElasticCloudCompute(EC2) Latency From Your Browser!</h3>
     </div>
@@ -108,12 +112,8 @@
     <p class="span8"> <a href="http://aws.amazon.com/" target="_blank">Amazon Cloud </a> is available in multiple regions and this tool will help you measure the latency from your browser to different regions. Click on the check latency button below to get started.</p>
     
     </div>
-   <p class="span12"/>
-   <p class="span12"/>
-   <p class="span12"/>
-   <p class="span12"/>
-
-
+   <p class="span12 rowtopspacing"/>
+  
   <div class="row"> 
     <table class="table table-bordered span4">
     <thead>
@@ -163,24 +163,20 @@
     
     </div>
   </div>
+  <p class="span12 rowtopspacing"/>
+ </div>
  
-  <p class="span12"/>
-  <p class="span12"/>
-  <p class="span12"/>
-  <p class="span12"/>
- <hr>
-
+ <div class="hero-unit">
  <div class="row">
   <h2 class="span12">FAQ</h2>
  </div>
-    <p class="span12"/>
     <p class="span12"/>
     <div class="row">
     <h3 class="span12">How reliable is this latency measurement?</h3>
     </div>
     <div class="row">
      <p class="span12"/>
-     <p class="span8">I would say from absolute latency perspective, it's not very reliable. However you should be looking at the relative value of the observed latencies for each AWS region to identify which are best AWS regions for your location.</p>
+     <p class="span10">I would say from absolute latency perspective, it's not very reliable. However you should be looking at the relative value of the observed latencies for each AWS region to identify which are best AWS regions for your location.</p>
     </div>
  
     <p class="span12"/>
@@ -189,9 +185,9 @@
     </div>
     <div class="row">
      <p class="span12"/>
-     <p class="span8"> We are making a HTTP GET request to AWS Service Endpoints (like EC2, SQS, SNS etc) for PING and measuring the observed latency for it across all regions.</p>
+     <p class="span10"> We are making a HTTP GET request to AWS Service Endpoints (like EC2, SQS, SNS etc) for PING and measuring the observed latency for it across all regions.</p>
     </div>
- 
+ </div>
  <hr>
     <footer>
         <p class="span8">&copy; Minajr 2012. Built using <a href="http://twitter.github.com/bootstrap/" target="_target">Bootstrap!</a></p>
