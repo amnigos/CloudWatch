@@ -26,9 +26,12 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
+
+     
+
       $("#btnLatency").click( function () {
 
-        alert("Will be implementing this feature soon :)");
+       $("#myModal").modal('show');
 
       });
 
@@ -129,8 +132,24 @@
     
     </div>
   </div>
+ 
+<div class="modal hide" id="myModal">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Notification</h3>
+    </div>
+    <div class="modal-body">
+    <p>Will be implementing this feature soon!</p>
+    </div>
+    <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+
+    </div>
+    </div>
+
   <p class="span12"/>
  
+
    
  <hr>
     <footer>
