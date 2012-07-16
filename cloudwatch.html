@@ -90,10 +90,10 @@
       var endPointURL = "http://"+endpoint + "/ping";
       apirequest.empty();
       apirequest.html("<img id='apiresponse' style='display: none'>");
-      var pingImage = $("#apiresponse");
-      pingImage.error(onComplete); // Since we are loading http text data into image src, it will execute onError handler.
+      var pingData = $("#apiresponse");
+      pingData.error(onComplete); // Since we are loading http text data into image src, it will execute onError handler.
       window.startTime = getCurrentTimeStamp(); // global variable startTime is initialized
-      pingImage.attr("src", endPointURL);
+      pingData.attr("src", endPointURL);
   }
 
 
