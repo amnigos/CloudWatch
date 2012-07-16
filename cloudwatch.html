@@ -25,17 +25,81 @@
     <link rel="shortcut icon" href="../assets/ico/favicon.ico">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
+      
+     //Initialize all EC2 API ends for different regions which will be used to measure the latency
+      var ec2 = {
+         va: "ec2.us-east-1.amazonaws.com",
+         ca: "ec2.us-west-1.amazonaws.com",
+         sgp: "ec2.ap-southeast-1.amazonaws.com",
+         og: "ec2.us-west-2.amazonaws.com",
+         sp: "ec2.sa-east-1.amazonaws.com",
+         eu: "ec2.eu-west-1.amazonaws.com",
+         tk: "ec2.ap-northeast-1.amazonaws.com"
+
+      };
+
+
     $(document).ready(function(){
 
+      $("#btnLatency").click( function () { 
 
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
 
-      $("#btnLatency").click( function () {
+        // create a request for each region
+        generateAWSAPIRequest(regions);
 
-       $("#myModal").modal('show');
+        // Modal dialog with notification
+        // $("#myModal").modal('show');
 
       });
 
     });
+
+    // Generate AWS EC2 API request for each Amazon region
+    function generateAWSAPIRequest(regions) {
+
+          var region = regions.pop();
+          if (region) {
+              var regionName = region.id;
+              var endpoint = ec2[regionName];
+               $('#'+regionName).html('connecting..');
+              executeAWSAPIRequest(endpoint, function(){ displayHTTPPingLatency(regionName, regions); });
+          }
+
+    }
+
+    // Display the observed HTTP request/response latency for each region
+    function displayHTTPPingLatency( regionName, regions) {
+
+      var endTime = getCurrentTimeStamp();
+      
+      var latencyTime = endTime-window.startTime;
+      
+      $('#'+regionName).html(latencyTime.toString()+"ms");
+
+      generateAWSAPIRequest(regions);
+
+    }
+
+    // Execute AWS API request for given end point
+    function executeAWSAPIRequest(endpoint, onComplete) {
+
+      var apirequest = $("#awsapirequest");
+      // Cache burst issues? - EC2 doesn't allow adding any parameters to /ping call
+      var endPointURL = "http://"+endpoint + "/ping";
+      apirequest.empty();
+      apirequest.html("<img id='apiresponse' style='display: none'>");
+      var pingImage = $("#apiresponse");
+      pingImage.error(onComplete); // Since we are loading http text data into image src, it will execute onError handler.
+      window.startTime = getCurrentTimeStamp(); // global variable startTime is initialized
+      pingImage.attr("src", endPointURL);
+  }
+
+
+function getCurrentTimeStamp() {
+    return (new Date()).getTime();
+}
     </script>
     
   </head>
@@ -71,7 +135,7 @@
     <div class="container">
 
     <div class="row">
-    <h3 class="span12">Measure Amazon Elastic Cloud Compute Latency From Your Browser!</h3>
+    <h3 class="span12">Measure Amazon ElasticCloudCompute(EC2) Latency From Your Browser!</h3>
     </div>
     <div class="row">
      <p class="span12"/>
@@ -89,48 +153,46 @@
     <thead>
     <tr>
     <th class="label label-info">AWS Region</th>
-    <th class="label label-info">Latency</th>
+    <th class="label label-info">HTTP Ping</th>
     </tr>
     </thead>
     <tbody>
     <tr>
     <td>N. Virginia</td>
-    <td><label/></td>
+    <td class="awsregion" id="va"><label/></td>
     </tr>
      <tr>
     <td>Oregon</td>
-    <td><label/></td>
+    <td class="awsregion" id="og"><label/></td>
     </tr>
      <tr>
     <td>N. California</td>
-    <td><label/></td>
+    <td  class="awsregion" id="ca"><label/></td>
     </tr>
      <tr>
     <td>Ireland</td>
-    <td><label/></td>
+    <td  class="awsregion" id="eu"><label/></td>
     </tr>
      <tr>
     <td>Singapore</td>
-    <td><label/></td>
+    <td  class="awsregion" id="sgp"><label/></td>
     </tr>
      <tr>
     <td>Tokyo</td>
-    <td><label/></td>
+    <td  class="awsregion" id="tk"><label/></td>
     </tr>
      <tr>
        
     <td>São Paulo</td>
-    <td><label/></td>
+    <td  class="awsregion" id="sp"><label/></td>
     </tr>
-
     </tbody>
     </table>
    </div>
-   <p class="span12"/>
    <div class="row">
     <div class="span2 offset1">
     
-    
+      <p id='awsapirequest'></p>
       <button type="submit" id="btnLatency" class="btn btn-success btn-large">Check Latency</button>
     
     </div>
