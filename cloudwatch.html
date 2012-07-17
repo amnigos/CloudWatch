@@ -14,7 +14,7 @@
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
       .rowtopspacing {
-        margin-top: 40px;
+        margin-top: 20px;
       }
 
     </style>
@@ -40,14 +40,80 @@
 
       };
 
+      var sqs = {
+         va: "sqs.us-east-1.amazonaws.com",
+         ca: "sqs.us-west-1.amazonaws.com",
+         sgp: "sqs.ap-southeast-1.amazonaws.com",
+         og: "sqs.us-west-2.amazonaws.com",
+         sp: "sqs.sa-east-1.amazonaws.com",
+         eu: "sqs.eu-west-1.amazonaws.com",
+         tk: "sqs.ap-northeast-1.amazonaws.com"
+
+      };
+
+      var sdb = {
+         va: "sdb.amazonaws.com",
+         ca: "sdb.us-west-1.amazonaws.com",
+         sgp: "sdb.ap-southeast-1.amazonaws.com",
+         og: "sdb.us-west-2.amazonaws.com",
+         sp: "sdb.sa-east-1.amazonaws.com",
+         eu: "sdb.eu-west-1.amazonaws.com",
+         tk: "sdb.ap-northeast-1.amazonaws.com"
+
+      };
+
+      var sns = {
+         va: "sns.us-east-1.amazonaws.com",
+         ca: "sns.us-west-1.amazonaws.com",
+         sgp: "sns.ap-southeast-1.amazonaws.com",
+         og: "sns.us-west-2.amazonaws.com",
+         sp: "sns.sa-east-1.amazonaws.com",
+         eu: "sns.eu-west-1.amazonaws.com",
+         tk: "sns.ap-northeast-1.amazonaws.com"
+
+      };
+
+
+
 
     $(document).ready(function(){
 
-      $("#btnLatency").click( function () { 
+     
+      $("#btnEC2").click( function () { 
         // get all regions data from the table elements
         var regions = $(".awsregion").toArray();
+        
         // create a request for each region
-        generateAWSAPIRequest(regions);
+        generateAWSAPIRequest(regions, ec2, "EC2");
+
+      });
+
+
+      $("#btnSQS").click( function () { 
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
+        
+        // create a request for each region
+        generateAWSAPIRequest(regions, sqs, "SQS");
+
+      });
+
+      $("#btnSNS").click( function () { 
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
+        
+        // create a request for each region
+        generateAWSAPIRequest(regions, sns,"SNS");
+
+      });
+
+
+      $("#btnSDB").click( function () { 
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
+        
+        // create a request for each region
+        generateAWSAPIRequest(regions, sdb, "SimpleDB");
 
       });
 
@@ -102,11 +168,10 @@
       It's <a href="http://aws.typepad.com/aws/2011/02/host-your-static-website-on-amazon-s3.html" target="_blank">hosted on S3</a> and add your awesomeness <a href="https://github.com/amnigos/CloudWatch" target="_blank">on GitHub</a>.
     </p>
     </div>
-
     <div class="container">
     <div class="hero-unit">
     <div class="row">
-    <h3 class="span8">Measure Amazon ElasticCloudCompute(EC2) Latency From Your Browser!</h3>
+    <h3 class="span8">Measure Amazon EC2, SimpleDB, SQS and SNS Services Latency From Your Browser!</h3>
     </div>
     <div class="row">
      <p class="span12"/>
@@ -120,37 +185,45 @@
     <thead>
     <tr>
     <th class="label label-info">AWS Region</th>
+    <th class="label label-info">Service Name</th>
     <th class="label label-info">HTTP Ping</th>
     </tr>
     </thead>
     <tbody>
     <tr>
     <td>N. Virginia</td>
+    <td id="vaservicename"></td>
     <td class="awsregion" id="va"><label/></td>
     </tr>
      <tr>
     <td>Oregon</td>
+     <td id="ogservicename"><label/></td>
     <td class="awsregion" id="og"><label/></td>
     </tr>
      <tr>
     <td>N. California</td>
+     <td id="caservicename"><label/></td>
     <td  class="awsregion" id="ca"><label/></td>
     </tr>
      <tr>
     <td>Ireland</td>
+    <td  id="euservicename"><label/></td>
     <td  class="awsregion" id="eu"><label/></td>
     </tr>
      <tr>
     <td>Singapore</td>
+    <td  id="sgpservicename"><label/></td>
     <td  class="awsregion" id="sgp"><label/></td>
     </tr>
      <tr>
     <td>Tokyo</td>
+    <td  id="tkservicename"><label/></td>
     <td  class="awsregion" id="tk"><label/></td>
     </tr>
      <tr>
        
     <td>São Paulo</td>
+    <td id="spservicename"><label/></td>
     <td  class="awsregion" id="sp"><label/></td>
     </tr>
     </tbody>
@@ -160,11 +233,24 @@
     <div class="span2 offset1">
     
       <p id='awsapirequest'></p>
-      <button type="submit" id="btnLatency" class="btn btn-success btn-large">Check Latency</button>
+
+      <div class="btn-group">
+       <button class="btn btn-large btn-success" id="btnCheckLatency" data-toggle="dropdown">Check Latency</button>
+       <button class="btn btn-large btn-success dropdown-toggle" id="dropdown" data-toggle="dropdown"><span class="caret"></span></button>
+          <ul class="dropdown-menu">
+           <li><a id="btnEC2">EC2</a></li>
+           <li class="divider"></li>
+           <li><a id="btnSDB">SimpleDB</a></li>
+           <li class="divider"></li>
+           <li><a id="btnSQS">SQS</a></li>
+           <li class="divider"></li>
+           <li><a id="btnSNS">SNS</a></li>
+          </ul>
+     </div>
+     
     
     </div>
   </div>
-  <p class="span12 rowtopspacing"/>
  </div>
  
  <div class="hero-unit" id="faq">
@@ -191,7 +277,7 @@
  </div>
  <hr>
     <footer>
-        <p class="span8">&copy; Minajr 2012. Built using <a href="http://twitter.github.com/bootstrap/" target="_target">Bootstrap!</a></p>
+        <p class="span8">&copy; Minajr 2012. Built using <a href="http://twitter.github.com/bootstrap/" target="_target">Bootstrap</a> by <a href="http://amnigos.com" target="_target">Vijay Rayapati</a></p>
         
     </footer>
 
@@ -205,20 +291,21 @@
      
      <script type="text/javascript">
       // Generate AWS EC2 API request for each Amazon region
-    function generateAWSAPIRequest(regions) {
+    function generateAWSAPIRequest(regions, serviceEndPoints, serviceName) {
 
           var region = regions.pop();
           if (region) {
               var regionName = region.id;
-              var endpoint = ec2[regionName];
+              var endpoint = serviceEndPoints[regionName];
                $('#'+regionName).html('connecting..');
-              executeAWSAPIRequest(endpoint, function(){ displayHTTPPingLatency(regionName, regions); });
+               $('#'+regionName+'servicename').html(serviceName);
+              executeAWSAPIRequest(endpoint, function(){ displayHTTPPingLatency(regionName, regions, serviceEndPoints, serviceName); });
           }
 
     }
 
     // Display the observed HTTP request/response latency for each region
-    function displayHTTPPingLatency( regionName, regions) {
+    function displayHTTPPingLatency( regionName, regions, serviceEndPoints, serviceName) {
 
       var endTime = getCurrentTimeStamp();
       
@@ -226,7 +313,7 @@
       
       $('#'+regionName).html(latencyTime.toString()+"ms");
 
-      generateAWSAPIRequest(regions);
+      generateAWSAPIRequest(regions, serviceEndPoints, serviceName);
 
     }
 
