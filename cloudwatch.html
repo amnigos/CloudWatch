@@ -24,104 +24,6 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-  
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript">
-      
-     //Initialize all EC2 API ends for different regions which will be used to measure the latency
-      var ec2 = {
-         va: "ec2.us-east-1.amazonaws.com",
-         ca: "ec2.us-west-1.amazonaws.com",
-         sgp: "ec2.ap-southeast-1.amazonaws.com",
-         og: "ec2.us-west-2.amazonaws.com",
-         sp: "ec2.sa-east-1.amazonaws.com",
-         eu: "ec2.eu-west-1.amazonaws.com",
-         tk: "ec2.ap-northeast-1.amazonaws.com"
-
-      };
-
-      var sqs = {
-         va: "sqs.us-east-1.amazonaws.com",
-         ca: "sqs.us-west-1.amazonaws.com",
-         sgp: "sqs.ap-southeast-1.amazonaws.com",
-         og: "sqs.us-west-2.amazonaws.com",
-         sp: "sqs.sa-east-1.amazonaws.com",
-         eu: "sqs.eu-west-1.amazonaws.com",
-         tk: "sqs.ap-northeast-1.amazonaws.com"
-
-      };
-
-      var sdb = {
-         va: "sdb.amazonaws.com",
-         ca: "sdb.us-west-1.amazonaws.com",
-         sgp: "sdb.ap-southeast-1.amazonaws.com",
-         og: "sdb.us-west-2.amazonaws.com",
-         sp: "sdb.sa-east-1.amazonaws.com",
-         eu: "sdb.eu-west-1.amazonaws.com",
-         tk: "sdb.ap-northeast-1.amazonaws.com"
-
-      };
-
-      var sns = {
-         va: "sns.us-east-1.amazonaws.com",
-         ca: "sns.us-west-1.amazonaws.com",
-         sgp: "sns.ap-southeast-1.amazonaws.com",
-         og: "sns.us-west-2.amazonaws.com",
-         sp: "sns.sa-east-1.amazonaws.com",
-         eu: "sns.eu-west-1.amazonaws.com",
-         tk: "sns.ap-northeast-1.amazonaws.com"
-
-      };
-
-
-
-
-    $(document).ready(function(){
-
-     
-      $("#btnEC2").click( function () { 
-        // get all regions data from the table elements
-        var regions = $(".awsregion").toArray();
-        
-        // create a request for each region
-        generateAWSAPIRequest(regions, ec2, "EC2");
-
-      });
-
-
-      $("#btnSQS").click( function () { 
-        // get all regions data from the table elements
-        var regions = $(".awsregion").toArray();
-        
-        // create a request for each region
-        generateAWSAPIRequest(regions, sqs, "SQS");
-
-      });
-
-      $("#btnSNS").click( function () { 
-        // get all regions data from the table elements
-        var regions = $(".awsregion").toArray();
-        
-        // create a request for each region
-        generateAWSAPIRequest(regions, sns,"SNS");
-
-      });
-
-
-      $("#btnSDB").click( function () { 
-        // get all regions data from the table elements
-        var regions = $(".awsregion").toArray();
-        
-        // create a request for each region
-        generateAWSAPIRequest(regions, sdb, "SimpleDB");
-
-      });
-
-    });
-
-   
-  </script>
-  
 
     <script type="text/javascript">
 
@@ -287,56 +189,164 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+  
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+
+    //Initialize all AWS Service API ends for different regions which will be used to measure the latency
+
+    var AWS = {
+
+          ec2 : {
+                   va: "ec2.us-east-1.amazonaws.com",
+                   ca: "ec2.us-west-1.amazonaws.com",
+                   sgp: "ec2.ap-southeast-1.amazonaws.com",
+                   og: "ec2.us-west-2.amazonaws.com",
+                   sp: "ec2.sa-east-1.amazonaws.com",
+                   eu: "ec2.eu-west-1.amazonaws.com",
+                   tk: "ec2.ap-northeast-1.amazonaws.com" 
+                 },
+
+          sqs : {
+                   va: "sqs.us-east-1.amazonaws.com",
+                   ca: "sqs.us-west-1.amazonaws.com",
+                   sgp: "sqs.ap-southeast-1.amazonaws.com",
+                   og: "sqs.us-west-2.amazonaws.com",
+                   sp: "sqs.sa-east-1.amazonaws.com",
+                   eu: "sqs.eu-west-1.amazonaws.com",
+                   tk: "sqs.ap-northeast-1.amazonaws.com"
+
+                },
+
+          sdb : {
+                   va: "sdb.amazonaws.com",
+                   ca: "sdb.us-west-1.amazonaws.com",
+                   sgp: "sdb.ap-southeast-1.amazonaws.com",
+                   og: "sdb.us-west-2.amazonaws.com",
+                   sp: "sdb.sa-east-1.amazonaws.com",
+                   eu: "sdb.eu-west-1.amazonaws.com",
+                   tk: "sdb.ap-northeast-1.amazonaws.com"
+
+                },
+
+          sns : {
+                   va: "sns.us-east-1.amazonaws.com",
+                   ca: "sns.us-west-1.amazonaws.com",
+                   sgp: "sns.ap-southeast-1.amazonaws.com",
+                   og: "sns.us-west-2.amazonaws.com",
+                   sp: "sns.sa-east-1.amazonaws.com",
+                   eu: "sns.eu-west-1.amazonaws.com",
+                   tk: "sns.ap-northeast-1.amazonaws.com"
+
+                },
+
+          generateAPIRequest : function(regions, serviceEndPoints, serviceName) {
+
+                  var region = regions.pop();
+                  if (region) {
+                      var regionName = region.id;
+                      var endpoint = serviceEndPoints[regionName];
+                       $('#'+regionName).html('connecting..');
+                       $('#'+regionName+'servicename').html(serviceName);
+                      this.executeAPIRequest(endpoint, function(){ 
+                          // Using to "AWS" context instead of "this" as anonymous function will loose "this" context related to AWS during invokation
+                          AWS.displayHTTPLatency(regionName, regions, serviceEndPoints, serviceName); 
+                      });
+                  }
+
+          },
+
+          executeAPIRequest : function(endpoint, onComplete) {
+
+                  var apirequest = $("#awsapirequest");
+                  // Cache burst issues? - EC2 doesn't allow adding any parameters to /ping call
+                  var endPointURL = "http://"+endpoint + "/ping";
+                  apirequest.empty();
+                  apirequest.html("<img id='apiresponse' style='display: none'>");
+                  var pingData = $("#apiresponse");
+                  pingData.error(onComplete); // Since we are loading http text data into image src, it will execute onError handler.
+                  window.startTime = this.getTimeStamp(); // global variable startTime is initialized
+                  pingData.attr("src", endPointURL);
+          },
+
+
+          displayHTTPLatency : function ( regionName, regions, serviceEndPoints, serviceName) {
+
+                  var endTime = this.getTimeStamp();
+                  
+                  var latencyTime = endTime-window.startTime;
+                  
+                  $('#'+regionName).html(latencyTime.toString()+"ms");
+
+                  this.generateAPIRequest(regions, serviceEndPoints, serviceName);
+
+          },
+
+          getTimeStamp : function (){
+
+               return (new Date()).getTime();
+          }   
+
+
+    }
+        
+
+    $(document).ready(function(){
+
+      var objAWS = AWS;
      
-     <script type="text/javascript">
-      // Generate AWS EC2 API request for each Amazon region
-    function generateAWSAPIRequest(regions, serviceEndPoints, serviceName) {
+      $("#btnEC2").click( function () { 
 
-          var region = regions.pop();
-          if (region) {
-              var regionName = region.id;
-              var endpoint = serviceEndPoints[regionName];
-               $('#'+regionName).html('connecting..');
-               $('#'+regionName+'servicename').html(serviceName);
-              executeAWSAPIRequest(endpoint, function(){ displayHTTPPingLatency(regionName, regions, serviceEndPoints, serviceName); });
-          }
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
+        
+        // generate required ping requests to EC2 regions
+        objAWS.generateAPIRequest(regions, objAWS.ec2, "EC2");
 
-    }
+      });
 
-    // Display the observed HTTP request/response latency for each region
-    function displayHTTPPingLatency( regionName, regions, serviceEndPoints, serviceName) {
 
-      var endTime = getCurrentTimeStamp();
+      $("#btnSQS").click( function () { 
+
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
+        
+        // generate required ping requests to SQS regions
+        objAWS.generateAPIRequest(regions, objAWS.sqs, "SQS");
+       
+
+      });
+
+      $("#btnSNS").click( function () { 
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
+        
+        // generate required ping requests to SNS regions
+        objAWS.generateAPIRequest(regions, objAWS.sns, "SNS");
+
       
-      var latencyTime = endTime-window.startTime;
-      
-      $('#'+regionName).html(latencyTime.toString()+"ms");
-
-      generateAWSAPIRequest(regions, serviceEndPoints, serviceName);
-
-    }
-
-    // Execute AWS API request for given end point
-    function executeAWSAPIRequest(endpoint, onComplete) {
-
-      var apirequest = $("#awsapirequest");
-      // Cache burst issues? - EC2 doesn't allow adding any parameters to /ping call
-      var endPointURL = "http://"+endpoint + "/ping";
-      apirequest.empty();
-      apirequest.html("<img id='apiresponse' style='display: none'>");
-      var pingData = $("#apiresponse");
-      pingData.error(onComplete); // Since we are loading http text data into image src, it will execute onError handler.
-      window.startTime = getCurrentTimeStamp(); // global variable startTime is initialized
-      pingData.attr("src", endPointURL);
-  }
+      });
 
 
-    function getCurrentTimeStamp() {
-      return (new Date()).getTime();
-  }
+      $("#btnSDB").click( function () { 
+        // get all regions data from the table elements
+        var regions = $(".awsregion").toArray();
 
-</script>
+        // generate required ping requests to SimpleDB regions
+        objAWS.generateAPIRequest(regions, objAWS.sdb, "SimpleDB");
+        
+
+      });
+
+    });
+
+   
+  </script>
+  
 
   </body>
 </html>
