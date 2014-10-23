@@ -143,10 +143,8 @@
    </div>
    <div class="row">
     <div class="span2 offset1">
-    
-      <p id='awsapirequest'></p>
-
-      <div class="btn-group">
+    <p id='awsapirequest'></p>
+    <div class="btn-group">
        <button class="btn btn-large btn-success" id="btnCheckLatency" data-toggle="dropdown">Check Latency</button>
        <button class="btn btn-large btn-success dropdown-toggle" id="dropdown" data-toggle="dropdown"><span class="caret"></span></button>
           <ul class="dropdown-menu">
@@ -159,9 +157,7 @@
            <li><a id="btnSNS">SNS</a></li>
           </ul>
      </div>
-     
-    
-    </div>
+     </div>
   </div>
  </div>
  
@@ -185,6 +181,13 @@
     <div class="row">
      <p class="span12"/>
      <p class="span10"> We are making a HTTP GET request to AWS Service Endpoints (like EC2, SQS, SNS etc) for PING and measuring the observed latency for it across all regions.</p>
+    </div>
+      <div class="row">
+    <h3 class="span12">What is NA in latency result?</h3>
+    </div>
+    <div class="row">
+     <p class="span12"/>
+     <p class="span10">It means Not Applicable and when a specific service like SimpleDB is not available in any AWS region, we will display NA instead of latency.</p>
     </div>
  </div>
  <hr>
@@ -242,6 +245,7 @@
                    sgp: "sdb.ap-southeast-1.amazonaws.com",
                    og: "sdb.us-west-2.amazonaws.com",
                    sp: "sdb.sa-east-1.amazonaws.com",
+                   fr: "NA",
                    ir: "sdb.eu-west-1.amazonaws.com",
                    tk: "sdb.ap-northeast-1.amazonaws.com",
                    aus: "sdb.ap-southeast-2.amazonaws.com" 
@@ -269,10 +273,19 @@
                       var endpoint = serviceEndPoints[regionName];
                        $('#'+regionName).html('connecting..');
                        $('#'+regionName+'servicename').html(serviceName);
-                      this.executeAPIRequest(endpoint, function(){ 
+                      // The endpoint will be NA if a specific service like SimpleDB is not available in AWS region
+                      if(endpoint !="NA") {
+                      
+                           this.executeAPIRequest(endpoint, function(){ 
                           // Using to "AWS" context instead of "this" as anonymous function will loose "this" context related to AWS during invokation
                           AWS.displayHTTPLatency(regionName, regions, serviceEndPoints, serviceName); 
                       });
+                      } else {
+                          //Just display NA instead of latency in milliseconds if specific service is not available in AWS region.
+                          $('#'+regionName).html("NA");
+                          this.generateAPIRequest(regions, serviceEndPoints, serviceName);
+                      }
+                      
                   }
 
           },
