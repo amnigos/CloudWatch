@@ -43,7 +43,7 @@
   </head>
 
   <body>
-  
+
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div class="row offset9"> 
+    <div class="row offset9">
       <p>
       It's <a href="http://aws.typepad.com/aws/2011/02/host-your-static-website-on-amazon-s3.html" target="_blank">hosted on S3</a> and add your awesomeness <a href="https://github.com/amnigos/CloudWatch" target="_blank">on GitHub</a>.
     </p>
@@ -78,11 +78,11 @@
     <div class="row">
      <p class="span12"/>
     <p class="span8"> <a href="http://aws.amazon.com/" target="_blank">Amazon Cloud </a> is available in multiple regions and this tool will help you measure the latency from your browser to different regions. Click on the check latency button below to get started.</p>
-    
+
     </div>
    <p class="span12 rowtopspacing"/>
-  
-  <div class="row"> 
+
+  <div class="row">
     <table class="table table-bordered span4">
     <thead>
     <tr>
@@ -128,7 +128,7 @@
     <td  class="awsregion" id="tk"><label/></td>
     </tr>
      <tr>
-       
+
     <td>São Paulo</td>
     <td id="spservicename"><label/></td>
     <td  class="awsregion" id="sp"><label/></td>
@@ -137,6 +137,11 @@
     <td>Australia</td>
     <td id="ausservicename"><label/></td>
     <td  class="awsregion" id="aus"><label/></td>
+    </tr>
+    <tr>
+    <td>Mumbai</td>
+    <td id="mumservicename"><label/></td>
+    <td  class="awsregion" id="mum"><label/></td>
     </tr>
     </tbody>
     </table>
@@ -160,7 +165,7 @@
      </div>
   </div>
  </div>
- 
+
  <div class="hero-unit" id="faq">
  <div class="row">
   <h2 class="span12">FAQ</h2>
@@ -173,7 +178,7 @@
      <p class="span12"/>
      <p class="span10">I would say from absolute latency perspective, it's not very reliable. However you should be looking at the relative value of the observed latencies for each AWS region to identify which are best AWS regions for your location.</p>
     </div>
- 
+
     <p class="span12"/>
     <div class="row">
     <h3 class="span12">How are you measuring the HTTP Ping Request Latency?</h3>
@@ -193,7 +198,7 @@
  <hr>
     <footer>
         <p class="span8">&copy; Minjar 2012. Built using <a href="http://twitter.github.com/bootstrap/" target="_target">Bootstrap</a> by <a href="http://amnigos.com" target="_target">Vijay Rayapati</a></p>
-        
+
     </footer>
 
 
@@ -202,7 +207,7 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-  
+
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -223,7 +228,8 @@
                    fr: "ec2.eu-central-1.amazonaws.com",
                    ir: "ec2.eu-west-1.amazonaws.com",
                    tk: "ec2.ap-northeast-1.amazonaws.com",
-                   aus: "ec2.ap-southeast-2.amazonaws.com" 
+                   aus: "ec2.ap-southeast-2.amazonaws.com",
+                   mum: "ec2.ap-south-1.amazonaws.com"
                  },
 
           sqs : {
@@ -235,7 +241,8 @@
                    fr: "sqs.eu-central-1.amazonaws.com",
                    ir: "sqs.eu-west-1.amazonaws.com",
                    tk: "sqs.ap-northeast-1.amazonaws.com",
-                   aus: "sqs.ap-southeast-2.amazonaws.com" 
+                   aus: "sqs.ap-southeast-2.amazonaws.com",
+                   mum: "sqs.ap-south-1.amazonaws.com"
 
                 },
 
@@ -248,7 +255,8 @@
                    fr: "NA",
                    ir: "sdb.eu-west-1.amazonaws.com",
                    tk: "sdb.ap-northeast-1.amazonaws.com",
-                   aus: "sdb.ap-southeast-2.amazonaws.com" 
+                   aus: "sdb.ap-southeast-2.amazonaws.com",
+                   mum: "sdb.ap-south-1.amazonaws.com"
 
                 },
 
@@ -261,7 +269,8 @@
                    fr: "sns.eu-central-1.amazonaws.com",
                    ir: "sns.eu-west-1.amazonaws.com",
                    tk: "sns.ap-northeast-1.amazonaws.com",
-                   aus: "sns.ap-southeast-2.amazonaws.com" 
+                   aus: "sns.ap-southeast-2.amazonaws.com",
+                   mum: "sns.ap-south-1.amazonaws.com"
 
                 },
 
@@ -275,17 +284,17 @@
                        $('#'+regionName+'servicename').html(serviceName);
                       // The endpoint will be NA if a specific service like SimpleDB is not available in AWS region
                       if(endpoint !="NA") {
-                      
-                           this.executeAPIRequest(endpoint, function(){ 
+
+                           this.executeAPIRequest(endpoint, function(){
                           // Using to "AWS" context instead of "this" as anonymous function will loose "this" context related to AWS during invokation
-                          AWS.displayHTTPLatency(regionName, regions, serviceEndPoints, serviceName); 
+                          AWS.displayHTTPLatency(regionName, regions, serviceEndPoints, serviceName);
                       });
                       } else {
                           //Just display NA instead of latency in milliseconds if specific service is not available in AWS region.
                           $('#'+regionName).html("NA");
                           this.generateAPIRequest(regions, serviceEndPoints, serviceName);
                       }
-                      
+
                   }
 
           },
@@ -307,9 +316,9 @@
           displayHTTPLatency : function ( regionName, regions, serviceEndPoints, serviceName) {
 
                   var endTime = this.getTimeStamp();
-                  
+
                   var latencyTime = endTime-window.startTime;
-                  
+
                   $('#'+regionName).html(latencyTime.toString()+"ms");
 
                   this.generateAPIRequest(regions, serviceEndPoints, serviceName);
@@ -319,64 +328,64 @@
           getTimeStamp : function (){
 
                return (new Date()).getTime();
-          }   
+          }
 
 
     }
-        
+
 
     $(document).ready(function(){
 
       var objAWS = AWS;
-     
-      $("#btnEC2").click( function () { 
+
+      $("#btnEC2").click( function () {
 
         // get all regions data from the table elements
         var regions = $(".awsregion").toArray();
-        
+
         // generate required ping requests to EC2 regions
         objAWS.generateAPIRequest(regions, objAWS.ec2, "EC2");
 
       });
 
 
-      $("#btnSQS").click( function () { 
+      $("#btnSQS").click( function () {
 
         // get all regions data from the table elements
         var regions = $(".awsregion").toArray();
-        
+
         // generate required ping requests to SQS regions
         objAWS.generateAPIRequest(regions, objAWS.sqs, "SQS");
-       
+
 
       });
 
-      $("#btnSNS").click( function () { 
+      $("#btnSNS").click( function () {
         // get all regions data from the table elements
         var regions = $(".awsregion").toArray();
-        
+
         // generate required ping requests to SNS regions
         objAWS.generateAPIRequest(regions, objAWS.sns, "SNS");
 
-      
+
       });
 
 
-      $("#btnSDB").click( function () { 
+      $("#btnSDB").click( function () {
         // get all regions data from the table elements
         var regions = $(".awsregion").toArray();
 
         // generate required ping requests to SimpleDB regions
         objAWS.generateAPIRequest(regions, objAWS.sdb, "SimpleDB");
-        
+
 
       });
 
     });
 
-   
+
   </script>
-  
+
 
   </body>
 </html>
