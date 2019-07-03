@@ -84,71 +84,145 @@
 
   <div class="row">
     <table class="table table-bordered span4">
-    <thead>
-    <tr>
-    <th class="label label-info">AWS Region</th>
-    <th class="label label-info">Service Name</th>
-    <th class="label label-info">HTTP Ping</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td>N. Virginia</td>
-    <td id="vaservicename"></td>
-    <td class="awsregion" id="va"><label/></td>
-    </tr>
-     <tr>
-    <td>Oregon</td>
-     <td id="ogservicename"><label/></td>
-    <td class="awsregion" id="og"><label/></td>
-    </tr>
-     <tr>
-    <td>N. California</td>
-     <td id="caservicename"><label/></td>
-    <td  class="awsregion" id="ca"><label/></td>
-    </tr>
-     <tr>
-    <td>Frankfurt</td>
-    <td  id="frservicename"><label/></td>
-    <td  class="awsregion" id="fr"><label/></td>
-    </tr>
-     <tr>
-    <td>Ireland</td>
-    <td  id="irservicename"><label/></td>
-    <td  class="awsregion" id="ir"><label/></td>
-    </tr>
-     <tr>
-    <td>London</td>
-    <td  id="loservicename"><label/></td>
-    <td  class="awsregion" id="lo"><label/></td>
-    </tr>
-     <tr>
-    <td>Singapore</td>
-    <td  id="sgpservicename"><label/></td>
-    <td  class="awsregion" id="sgp"><label/></td>
-    </tr>
-     <tr>
-    <td>Tokyo</td>
-    <td  id="tkservicename"><label/></td>
-    <td  class="awsregion" id="tk"><label/></td>
-    </tr>
-     <tr>
-
-    <td>São Paulo</td>
-    <td id="spservicename"><label/></td>
-    <td  class="awsregion" id="sp"><label/></td>
-    </tr>
-    <tr>
-    <td>Australia</td>
-    <td id="ausservicename"><label/></td>
-    <td  class="awsregion" id="aus"><label/></td>
-    </tr>
-    <tr>
-    <td>Mumbai</td>
-    <td id="mumservicename"><label/></td>
-    <td  class="awsregion" id="mum"><label/></td>
-    </tr>
-    </tbody>
+      <thead>
+        <tr>
+          <th class="label label-info">AWS Region</th>
+          <th class="label label-info">Service Name</th>
+          <th class="label label-info">HTTP Ping</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="3" class="label label-inverse">
+            <h5>North America</h5>
+          </td>
+        </tr>
+        <tr>
+          <td>Ohio</td>
+          <td id="ohservicename"></td>
+          <td class="awsregion" id="oh"><label /></td>
+        </tr>
+        <tr>
+          <td>AWS GovCloud (US-East)</td>
+          <td id="gveservicename"></td>
+          <td class="awsregion" id="gve"><label /></td>
+        </tr>
+        <tr>
+          <td>AWS GovCloud</td>
+          <td id="gvservicename"></td>
+          <td class="awsregion" id="gv"><label /></td>
+        </tr>
+        <tr>
+          <td>N. Virginia</td>
+          <td id="vaservicename"></td>
+          <td class="awsregion" id="va"><label /></td>
+        </tr>
+        <tr>
+          <td>Oregon</td>
+          <td id="ogservicename"><label /></td>
+          <td class="awsregion" id="og"><label /></td>
+        </tr>
+        <tr>
+          <td>N. California</td>
+          <td id="caservicename"><label /></td>
+          <td class="awsregion" id="ca"><label /></td>
+        </tr>
+        <tr>
+          <td>Canada (Central)</td>
+          <td id="ccaservicename"></td>
+          <td class="awsregion" id="cca"><label /></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="label label-inverse">
+            <h5>South America</h5>
+          </td>
+        </tr>
+        <tr>
+          <td>São Paulo</td>
+          <td id="spservicename"><label /></td>
+          <td class="awsregion" id="sp"><label /></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="label label-inverse">
+            <h5>Asia Pacific</h5>
+          </td>
+        </tr>
+        <tr>
+          <td>Hong Kong</td>
+          <td id="hkservicename"></td>
+          <td class="awsregion" id="hk"><label /></td>
+        </tr>
+        <tr>
+          <td>Osaka</td>
+          <td id="okservicename"></td>
+          <td class="awsregion" id="ok"><label /></td>
+        </tr>
+        <tr>
+          <td>Seoul</td>
+          <td id="seservicename"></td>
+          <td class="awsregion" id="se"><label /></td>
+        </tr>
+        <tr>
+          <td>Beijing</td>
+          <td id="bcnservicename"></td>
+          <td class="awsregion" id="bcn"><label /></td>
+        </tr>
+        <tr>
+          <td>Ningxia</td>
+          <td id="ncnservicename"></td>
+          <td class="awsregion" id="ncn"><label /></td>
+        </tr>
+        <td>Singapore</td>
+        <td id="sgpservicename"><label /></td>
+        <td class="awsregion" id="sgp"><label /></td>
+        </tr>
+        <tr>
+          <td>Tokyo</td>
+          <td id="tkservicename"><label /></td>
+          <td class="awsregion" id="tk"><label /></td>
+        </tr>
+        <tr>
+          <td>Australia</td>
+          <td id="ausservicename"><label /></td>
+          <td class="awsregion" id="aus"><label /></td>
+        </tr>
+        <tr>
+          <td>Mumbai</td>
+          <td id="mumservicename"><label /></td>
+          <td class="awsregion" id="mum"><label /></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="label label-inverse">
+            <h5>Europe</h5>
+          </td>
+        </tr>
+        <tr>
+          <td>Paris</td>
+          <td id="prservicename"></td>
+          <td class="awsregion" id="pr"><label /></td>
+        </tr>
+        <tr>
+          <td>Stockholm</td>
+          <td id="stservicename"></td>
+          <td class="awsregion" id="st"><label /></td>
+        </tr>
+        <tr>
+          <td>Frankfurt</td>
+          <td id="frservicename"><label /></td>
+          <td class="awsregion" id="fr"><label /></td>
+        </tr>
+        <tr>
+          <td>Ireland</td>
+          <td id="irservicename"><label /></td>
+          <td class="awsregion" id="ir"><label /></td>
+        </tr>
+        <tr>
+          <td>London</td>
+          <td id="loservicename"><label /></td>
+          <td class="awsregion" id="lo"><label /></td>
+        </tr>
+        <tr>
+      </tbody>
     </table>
    </div>
    <div class="row">
@@ -235,7 +309,19 @@
                    lo: "ec2.eu-west-2.amazonaws.com",
                    tk: "ec2.ap-northeast-1.amazonaws.com",
                    aus: "ec2.ap-southeast-2.amazonaws.com",
-                   mum: "ec2.ap-south-1.amazonaws.com"
+                   mum: "ec2.ap-south-1.amazonaws.com",
+                   //Begin new EC2 regions
+                   oh: "ec2.us-east-2.amazonaws.com",
+                   cca: "ec2.ca-central-1.amazonaws.com",
+                   hk: "ec2.ap-east-1.amazonaws.com",
+                   ok: "ec2.ap-northeast-3.amazonaws.com",
+                   se: "ec2.ap-northeast-2.amazonaws.com",
+                   bcn: "ec2.cn-north-1.amazonaws.com.cn",
+                   ncn: "ec2.cn-northwest-1.amazonaws.com.cn",
+                   pr: "ec2.eu-west-3.amazonaws.com",
+                   st: "ec2.eu-north-1.amazonaws.com",
+                   gve: "ec2.us-gov-east-1.amazonaws.com",
+                   gv: "ec2.us-gov-west-1.amazonaws.com"
                  },
 
           sqs : {
@@ -249,7 +335,19 @@
                    lo: "sqs.eu-west-2.amazonaws.com",
                    tk: "sqs.ap-northeast-1.amazonaws.com",
                    aus: "sqs.ap-southeast-2.amazonaws.com",
-                   mum: "sqs.ap-south-1.amazonaws.com"
+                   mum: "sqs.ap-south-1.amazonaws.com",
+                   //Begin new SQS regions
+                   oh: "sqs.us-east-2.amazonaws.com",
+                   cca: "sqs.ca-central-1.amazonaws.com",
+                   hk: "sqs.ap-east-1.amazonaws.com",
+                   ok: "sqs.ap-northeast-3.amazonaws.com",
+                   se: "sqs.ap-northeast-2.amazonaws.com",
+                   bcn: "sqs.cn-north-1.amazonaws.com.cn",
+                   ncn: "sqs.cn-northwest-1.amazonaws.com.cn",
+                   pr: "sqs.eu-west-3.amazonaws.com",
+                   st: "sqs.eu-north-1.amazonaws.com",
+                   gve: "sqs.us-gov-east-1.amazonaws.com",
+                   gv: "sqs.us-gov-west-1.amazonaws.com"
 
                 },
 
@@ -264,8 +362,19 @@
                    lo: "NA",
                    tk: "sdb.ap-northeast-1.amazonaws.com",
                    aus: "sdb.ap-southeast-2.amazonaws.com",
-                   mum: "NA"
-
+                   mum: "NA",
+                   //Begin new sdb regions
+                   oh: "NA",
+                   cca: "NA",
+                   hk: "NA",
+                   ok: "NA",
+                   se: "NA",
+                   bcn: "NA",
+                   ncn: "NA",
+                   pr: "NA",
+                   st: "NA",
+                   gve: "NA",
+                   gv: "NA"
                 },
 
           sns : {
@@ -279,7 +388,20 @@
                    lo: "sns.eu-west-2.amazonaws.com",
                    tk: "sns.ap-northeast-1.amazonaws.com",
                    aus: "sns.ap-southeast-2.amazonaws.com",
-                   mum: "sns.ap-south-1.amazonaws.com"
+                   mum: "sns.ap-south-1.amazonaws.com",
+                  //Begin new SNS regions
+                   oh: "sns.us-east-2.amazonaws.com",
+                   cca: "sns.ca-central-1.amazonaws.com",
+                   hk: "sns.ap-east-1.amazonaws.com",
+                   ok: "sns.ap-northeast-3.amazonaws.com",
+                   se: "sns.ap-northeast-2.amazonaws.com",
+                   bcn: "sns.cn-north-1.amazonaws.com.cn",
+                   ncn: "sns.cn-northwest-1.amazonaws.com.cn",
+                   pr: "sns.eu-west-3.amazonaws.com",
+                   st: "sns.eu-north-1.amazonaws.com",
+                   gve: "sns.us-gov-east-1.amazonaws.com",
+                   gv: "sns.us-gov-west-1.amazonaws.com"
+                   
 
                 },
 
